@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Teto\HTTP\AcceptLanguage;
@@ -22,11 +24,13 @@ Route::get('/', function () {
 
 Route::get('/story', [FormController::class, "show"])->name("story.show");
 Route::post('/story', [FormController::class, "handle"])->name("story.handle");
-Route::delete('/story', [FormController::class, "delete"])->name("story.delete");
 
 Route::get('/set-color/{color}', function ($color) {
     return redirect()->back()->withCookie("color", $color);
 });
+
+Route::resource("posts", PostController::class);
+Route::resource("categories", CategoryController::class);
 
 Route::get('/hello', function () {
     $arr = range(0, 10);
