@@ -84,8 +84,6 @@
         @if ($story)
             <div class="story">
                 @include('story.result')
-                @method('DELETE')
-                <button class="delete-button" type="submit">❌</button>
             </div>
         @endif
         @include('story.form')

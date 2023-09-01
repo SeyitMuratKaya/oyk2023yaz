@@ -33,12 +33,6 @@ class FormController extends Controller
         return redirect()->route("story.show");
     }
 
-    public function delete(Request $request)
-    {
-        $request->session()->remove("story_params");
-        return redirect()->route("story.show");
-    }
-
     private function prepareStoryText($params)
     {
         $story = "Kahramanımız "
