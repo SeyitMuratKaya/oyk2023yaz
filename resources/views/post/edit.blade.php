@@ -17,6 +17,16 @@
     <form method="POST" action="{{ route('posts.update', $post) }}">
         @csrf
         @method('PUT')
+        <label for="postCategory">Category</label>
+        <br>
+        <select name="category_id" id="postCategory">
+            @foreach ($categories as $category)
+                {{-- <option @if ($post->category == $category) {{ 'selected' }} @endif value="{{ $category->id }}"> --}}
+                <option @if ($post->category_id == $category->id) {{ 'selected' }} @endif value="{{ $category->id }}">
+                    {{ $category->name }}</option>
+            @endforeach
+        </select>
+        <br>
         <label for="postTitle">Title</label>
         <br>
         <input type="text" name="title" id="postTitle" value={{ $errors->any() ? old('title') : $post->title }}>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view("post.create");
+        $categories = Category::all();
+
+        return view("post.create", compact("categories"));
     }
 
     /**
@@ -31,12 +34,14 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'category_id' => 'required|exists:categories,id',
             "title" => "required|min:3",
             "content" => "nullable",
         ]);
 
         $post = new Post;
 
+        $post->category()->associate($request->input('category_id'));
         $post->title = $request->title;
         $post->content = $request->content;
 
@@ -58,7 +63,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('post.edit', compact('post'));
+        $categories = Category::all();
+        return view('post.edit', compact('post', 'categories'));
     }
 
     /**
@@ -67,10 +73,14 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $request->validate([
+            'category_id' => 'required|exists:categories,id',
             "title" => "required|min:3",
             "content" => "nullable",
+
         ]);
 
+        $post->category()->associate($request->input('category_id'));
+        // $post->category_id = $request->input('category_id'); not recommended
         $post->title = $request->title;
         $post->content = $request->content;
 

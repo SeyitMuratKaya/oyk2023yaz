@@ -16,6 +16,14 @@
     @endif
     <form method="POST" action="{{ route('posts.store') }}">
         @csrf
+        <label for="slcCategory">Kategori</label>
+        <br>
+        <select name="category_id" id="slcCategory">
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+        </select>
+        <br>
         <label for="postTitle">Title</label>
         <br>
         <input type="text" name="title" id="postTitle" value={{ old('title') }}>

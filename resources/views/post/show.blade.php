@@ -12,6 +12,12 @@
     <h1>
         {{ $post->title }}
     </h1>
+    Kategori:
+    <a href="{{ route('categories.show', $post->category) }}">
+        {{ $post->category->name }}
+    </a>
+    </p>
+
     <p>{{ $post->content }}</p>
     <p><small>{{ $post->created_at->diffForHumans() }}</small></p>
     <a href="{{ route('posts.index') }}">Geri</a>

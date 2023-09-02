@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <a href="{{ route('posts.create') }}">Ekle</a>
+    <h1>Posts</h1>
     <ul>
         @foreach ($posts as $post)
             <li>
@@ -17,6 +17,8 @@
             </li>
         @endforeach
     </ul>
+    <hr>
+    <a href="{{ route('posts.create') }}">Ekle</a>
 </body>
 
 </html>
