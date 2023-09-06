@@ -10,11 +10,20 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::query()->orderBy('name')->get();
+        $categories = Category::query();
+        $order = $request->get('order');
 
-        return view('category.index', compact('categories'));
+        if ($order === 'desc') {
+            $categories->orderByDesc('name');
+        } else {
+            $categories->orderBy('name');
+        }
+
+        $categories = $categories->get();
+
+        return view('category.index', compact('categories', 'order'));
     }
 
     /**
@@ -46,7 +55,10 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('category.show', compact('category'));
+
+        $posts = $category->posts()->latest()->take(3)->get();
+
+        return view('category.show', compact('category', 'posts'));
     }
 
     /**

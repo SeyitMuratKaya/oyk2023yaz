@@ -11,9 +11,16 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::all();
+        $posts = Post::query();
+
+        if ($request->has('category_id')) {
+            $posts->where('category_id', $request->get('category_id'));
+        }
+
+        $posts = $posts->get();
+
 
         return view("post.index", compact("posts"));
     }
